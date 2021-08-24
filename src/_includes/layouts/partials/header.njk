@@ -1,4 +1,4 @@
-    <header class="h-12 bg-black dark:bg-blue-700 w-full fixed p-0 mt-0 z-50 px-5">
+    <header class="h-12 bg-black dark:bg-blue-700 w-full fixed p-0 mt-0 z-50 px-5 top-0 left-0">
       <p class="text-white font-bold mt-2 pt-1 text-lg w-full leading-none">
         <a href="/" class="font-sans text-white active:text-gray-400 hover:text-gray-400" style="border: 0 !important; text-decoration: none !important;">
           Raggart's Reviews
@@ -16,13 +16,13 @@
           <li class="nav__item">
             <a href="/about/" title="About">About</a>
           </li>
-          {%- for review in collections.review | reverse -%}
-            {%- if loop.index0 < 1 -%}
-              <li class="nav__item"><a href="{{ review.url }}" title="Latest review">Latest review</a></li>
-            {%- endif -%}
-          {%- endfor -%}
+{%- for review in collections.reviews | reverse -%}
+{%-   if loop.index0 < 1 -%}
+          <li class="nav__item"><a href="{{ review.url }}" title="Latest review">Latest review</a></li>
+{%-   endif -%}
+{%- endfor -%}
           <li class="nav__item">
-            <a href="/reviews/" title="All reviews in descending chronological order">All reviews</a>
+            <a href="/reviews/" title="All videogame reviews in descending chronological order">All reviews</a>
           </li>
         </ul>
       </nav>

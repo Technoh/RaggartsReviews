@@ -91,9 +91,10 @@ module.exports = function(eleventyConfig) {
   });
 
   // https://www.11ty.dev/docs/layouts/
-  eleventyConfig.addLayoutAlias("base", "layouts/_default/base.njk")
-  eleventyConfig.addLayoutAlias("review", "layouts/posts/review-template.njk")
-  eleventyConfig.addLayoutAlias("index", "layouts/_default/index.njk")
+  eleventyConfig.addLayoutAlias("base", "layouts/_default/base.njk");
+  eleventyConfig.addLayoutAlias("review", "layouts/_default/review.njk");
+  eleventyConfig.addLayoutAlias("index", "layouts/_default/index.njk");
+  eleventyConfig.addLayoutAlias("page", "layouts/_default/page.njk");
 
   /* Markdown plugins */
   // https://www.11ty.dev/docs/languages/markdown/
@@ -161,22 +162,23 @@ module.exports = function(eleventyConfig) {
     return content
   })
 
-  /* === START, prev/next posts stuff === */
-  // https://github.com/11ty/eleventy/issues/529#issuecomment-568257426
+  eleventyConfig.addCollection("reviews", function(collectionApi) {
+    const reviews = collectionApi.getFilteredByGlob("src/reviews/*.njk");
 
-  eleventyConfig.addCollection("posts", function(collection) {
-    const coll = collection.getFilteredByTag("post")
-    for(let i = 0; i < coll.length; i++) {
-      const prevPost = coll[i-1]
-      const nextPost = coll[i+1]
-      coll[i].data["prevPost"] = prevPost
-      coll[i].data["nextPost"] = nextPost
+    // Ajout d'un lien vers la critique précédente et suivante, s'il y a lieu.
+    for(let reviewCounter = 0; reviewCounter < reviews.length; reviewCounter++) {
+      if(reviews[reviewCounter - 1]) {
+        reviews[reviewCounter].data["previousReview"] = reviews[reviewCounter - 1]
+      }
+
+      if(reviews[reviewCounter + 1]) {
+        reviews[reviewCounter].data["nextReview"] = reviews[reviewCounter + 1]
+      }
     }
-    return coll
+
+    return reviews;
   })
 
-  /* === END, prev/next posts stuff === */
-  
   /* pathPrefix: "/"; */
   return {
     dir: {

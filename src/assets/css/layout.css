@@ -1,14 +1,14 @@
-main {
-  @apply pt-12;
-  @apply bg-black;
-}
-
 html, body {
   @apply dark:bg-black;
 }
 
 body {
   @apply font-sans dark:text-gray-200;
+}
+
+main {
+  @apply pt-12;
+  @apply bg-black;
 }
 
 p, li {
