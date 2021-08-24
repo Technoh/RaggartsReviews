@@ -5,7 +5,7 @@
   "scripts": {
     "clean": "rm -rf _site",
     "hasher": "node csshash.js",
-    "start": "npm-run-all clean hasher --parallel dev:*",
+    "start": "DEBUG=Eleventy* npm-run-all clean hasher --parallel dev:*",
     "dev:postcss": "TAILWIND_MODE=watch postcss src/assets/css/index.css -o _site/css/index.css --config ./postcss.config.js -w",
     "dev:eleventy": "ELEVENTY_ENV=development npx @11ty/eleventy --serve --quiet --incremental",
     "build": "NODE_ENV=production npm-run-all clean hasher --parallel prod:*",

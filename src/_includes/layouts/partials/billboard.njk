@@ -1,19 +1,19 @@
-<div class="text-center pt-12 lg:pt-20">
+<div class="billboard text-center pb-4 lg:pb-6 2xl:pb-8">
+{% if heroImage and heroAltText %}
+  <div class="hero-image">
+    {% image heroImage, heroAltText %}
+  </div>
+{% endif %}
   <div>
-    <h1 class="text-3xl lg:text-6xl 2xl:text-8xl">{{ title }}</h1>
-    {% if subtitle %}
-    <h2 class="mt-6 lg:mt-8 2xl:mt-12 text-2xl lg:text-4xl 2xl:text-5xl">{{ subtitle }}</h2>
-    {% endif %}
-    {% if description %}
-    <p class="font-sans mt-8 lg:mt-12 2xl:mt-16 text-xl lg:text-2xl 2xl:text-3xl">{{ description }}</p>
-    {% endif %}
-    <p class="font-sans mt-4 lg:mt-6 2xl:mt-8"><strong>{{ page.date | htmlDateString }}</strong><br />
-    <span class="text-base">
-    {% if lastmod %}
-    Last modified {{ lastmod | htmlDateString }}
-    {% else %}
-    &nbsp;
-    {% endif %}
-    </span>
+    <h1 class="text-3xl lg:text-6xl 2xl:text-8xl">{{ gameName }}</h1>
+    <p class="mb-0 mt-4 lg:mt-6 2xl:mt-8">
+      Created on <strong>{{ creationDate | htmlDateString }}</strong>
+{% if wasUpdated %}
+      and last updated on <strong>{{ page.date | htmlDateString }}</strong>
+{% endif %}
+    </p>
+{% if lastPlayed %}
+    <p class="mb-0 mt-1 lg:mt-2 2xl:mt-4">Last played in <strong>{{ lastPlayed | displayMonthYear }}</strong></p>
+{% endif %}
   </div>
 </div>

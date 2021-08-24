@@ -1,5 +1,6 @@
 main {
   @apply pt-12;
+  @apply bg-black;
 }
 
 html, body {
@@ -7,7 +8,7 @@ html, body {
 }
 
 body {
-  @apply font-serif dark:text-gray-200;
+  @apply font-sans dark:text-gray-200;
 }
 
 p, li {
@@ -168,23 +169,43 @@ h5, .h5, h6, .h6 {
   }
 }
 
-
 .text-nowrap, .text-nobrk {
   @apply whitespace-nowrap;
 }
 
+.billboard {
+  @apply bg-white;
+}
+
+article {
+  @apply bg-white py-2 pb-10;
+  max-width: 750px;
+}
+
 article h1, article h2, article h3, article h4 {
-  @apply tracking-tight mt-8 mb-6;
+  @apply tracking-tight mt-8 mb-6 px-6;
 }
 
 article p, li {
-  @apply text-lg mt-6 mb-6 leading-relaxed;
+  @apply text-lg mt-6 mb-6 leading-relaxed px-6;
 }
 
 article img.containedImage {
   min-width: 100%;
   max-width: 100%;
   @apply w-full h-auto;
+}
+
+aside > div, aside > ul {
+  @apply bg-white p-2;
+}
+
+.section-summary p {
+  @apply mb-0 flex flex-row items-center;
+}
+
+.section-summary p span {
+  @apply flex-1;
 }
 
 @media screen and (min-width: 768px) {
@@ -339,7 +360,7 @@ hr {
 }
 
 footer {
-  @apply font-sans;
+  @apply font-sans bg-white;
 }
 
 .lazypicturecaption {
@@ -360,6 +381,13 @@ footer {
   width: 85%;
   max-width: 720px !important;
   margin-bottom: 0;
+}
+
+.conteneur-principal {
+  @apply bg-white;
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @media screen and (min-width: 900px) {

@@ -1,10 +1,10 @@
 ---
 layout: index
-title: "Your UNIQUE title here"
-description: "Your UNIQUE description here." # quotation marks to allow colons where used
-author: Your name here
-date: 2018-09-14T21:00:00-05:00
-lastmod: 2020-07-24T16:00:00-05:00
+title: "Raggart's Reviews - Mostly longform videogame reviews"
+description: "All of my free, mostly longform videogame reviews." # quotation marks to allow colons where used
+author: Raggart
+date: 2021-08-23T11:35:00-04:00
+lastmod: Last Modified
 ---
 
 This sentence comes from the **/src/index.md** file.

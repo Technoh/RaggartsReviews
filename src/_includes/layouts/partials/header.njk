@@ -1,5 +1,9 @@
-    <header class="h-12 bg-black dark:bg-blue-700 w-full fixed p-0 mt-0 z-50">
-      <p class="text-white font-bold mt-2 pt-1 text-lg ml-4 md:ml-8 lg:ml-10 xb:ml-16 w-full"><a href="/" class="font-sans text-white active:text-gray-400 hover:text-gray-400" style="border: 0 !important; text-decoration: none !important;">Site name goes here</a></p>
+    <header class="h-12 bg-black dark:bg-blue-700 w-full fixed p-0 mt-0 z-50 px-5">
+      <p class="text-white font-bold mt-2 pt-1 text-lg w-full leading-none">
+        <a href="/" class="font-sans text-white active:text-gray-400 hover:text-gray-400" style="border: 0 !important; text-decoration: none !important;">
+          Raggart's Reviews
+        </a>
+      </p>
       <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" />
       <label for="nav-toggle" class="nav__icon" aria-hidden="true">
         Expand the menu
@@ -12,13 +16,13 @@
           <li class="nav__item">
             <a href="/about/" title="About">About</a>
           </li>
-          {%- for post in collections.post | reverse -%}
+          {%- for review in collections.review | reverse -%}
             {%- if loop.index0 < 1 -%}
-              <li class="nav__item"><a href="{{ post.url }}" title="Latest post">Latest post</a></li>
+              <li class="nav__item"><a href="{{ review.url }}" title="Latest review">Latest review</a></li>
             {%- endif -%}
           {%- endfor -%}
           <li class="nav__item">
-            <a href="/posts/" title="All posts">All posts</a>
+            <a href="/reviews/" title="All reviews in descending chronological order">All reviews</a>
           </li>
         </ul>
       </nav>

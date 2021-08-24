@@ -1,9 +1,9 @@
 {
-  "title": "Your site title",
-  "url": "https://example.com",
-  "domain": "example.com",
-  "description": "Your site description.",
+  "title": "Raggart's Reviews",
+  "url": "https://raggartsreviews.com",
+  "domain": "raggartsreviews.com",
+  "description": "Game reviews for every genre",
   "author": {
-    "name": "Your name"
+    "name": "Raggart"
   }
 }

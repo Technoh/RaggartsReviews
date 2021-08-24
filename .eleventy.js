@@ -5,12 +5,10 @@ const svgContents = require("eleventy-plugin-svg-contents")
 const path = require ('path')
 const Image = require('@11ty/eleventy-img')
 
-async function imageShortcode(src, alt) {
+async function imageShortcode(src, alt, cssClasses = "") {
   let sizes = "(min-width: 1024px) 100vw, 50vw"
   let srcPrefix = `./src/assets/images/`
-  // ... so you don't have to enter path info for each ref,
-  //     but also means you have to store them there
-  //     --- which probably is best (IMHO)
+  // ... so you don't have to enter path info for each ref, but also means you have to store them there --- which probably is best (IMHO)
   src = srcPrefix + src
   console.log(`Generating image(s) from:  ${src}`)
   if(alt === undefined) {
@@ -18,7 +16,7 @@ async function imageShortcode(src, alt) {
     throw new Error(`Missing \`alt\` on responsiveimage from: ${src}`)
   }  
   let metadata = await Image(src, {
-    widths: [600, 900, 1500],
+    widths: [600, 900, 1400, 1800],
     formats: ['webp', 'jpeg'],
     urlPath: "/images/",
     outputDir: "./_site/images/",
@@ -35,10 +33,12 @@ async function imageShortcode(src, alt) {
       return `  <source type="${imageFormat[0].sourceType}" srcset="${imageFormat.map(entry => entry.srcset).join(", ")}" sizes="${sizes}">`
     }).join("\n")}
     <img
+      class="${ cssClasses ? cssClasses : 'mx-auto'}"
       src="${lowsrc.url}"
       width="${highsrc.width}"
       height="${highsrc.height}"
       alt="${alt}"
+      title="${alt}"
       loading="lazy"
       decoding="async">
   </picture>`
@@ -61,38 +61,38 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy('./src/assets/svg')
   eleventyConfig.addPassthroughCopy('./src/images')
 
-  eleventyConfig.addFilter("readableDate", dateObj => {
-    return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat("dd LLL yyyy")
-  })
+  eleventyConfig.addFilter("readableDate", dateObject => {
+    return DateTime.fromJSDate(dateObject, {zone: 'utc'}).toFormat("dd LLL yyyy")
+  });
 
   // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
-  eleventyConfig.addFilter('htmlDateString', dateObj => {
-    return DateTime.fromJSDate(dateObj).toFormat('MMMM d, yyyy')
-  })
+  eleventyConfig.addFilter('displayMonthYear', dateObject => {
+    return DateTime.fromJSDate(dateObject).toFormat('MMMM yyyy')
+  });
 
-  eleventyConfig.addFilter('dateStringISO', dateObj => {
-    return DateTime.fromJSDate(dateObj).toFormat('yyyy-MM-dd')
-  })
+  eleventyConfig.addFilter('htmlDateString', dateObject => {
+    return DateTime.fromJSDate(dateObject).toFormat('MMMM d, yyyy')
+  });
+
+  eleventyConfig.addFilter('dateStringISO', dateObject => {
+    return DateTime.fromJSDate(dateObject).toFormat('yyyy-MM-dd')
+  });
 
   eleventyConfig.addFilter('dateFromTimestamp', timestamp => {
     return DateTime.fromISO(timestamp, { zone: 'utc' }).toJSDate()
-  })
+  });
 
   eleventyConfig.addFilter('dateFromRFC2822', timestamp => {
     return DateTime.fromJSDate(timestamp).toISO()
-  })
+  });
 
-  eleventyConfig.addFilter('readableDateFromISO', dateObj => {
-    return DateTime.fromISO(dateObj).toFormat('LLL d, yyyy h:mm:ss a ZZZZ')
-  })
-
-  eleventyConfig.addFilter('pub_lastmod', dateObj => {
-    return DateTime.fromJSDate(dateObj, { zone: 'utc' }).toFormat('MMMM d, yyyy')
-  })
+  eleventyConfig.addFilter('readableDateFromISO', dateObject => {
+    return DateTime.fromISO(dateObject).toFormat('LLL d, yyyy h:mm:ss a ZZZZ')
+  });
 
   // https://www.11ty.dev/docs/layouts/
   eleventyConfig.addLayoutAlias("base", "layouts/_default/base.njk")
-  eleventyConfig.addLayoutAlias("singlepost", "layouts/posts/singlepost.njk")
+  eleventyConfig.addLayoutAlias("review", "layouts/posts/review-template.njk")
   eleventyConfig.addLayoutAlias("index", "layouts/_default/index.njk")
 
   /* Markdown plugins */

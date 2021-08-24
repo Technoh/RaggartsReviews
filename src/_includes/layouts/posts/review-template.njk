@@ -1,0 +1,56 @@
+---
+title: review-template.njk
+layout: base
+---
+
+<main>
+
+  {% include 'layouts/partials/billboard.njk' %}
+
+  <div class="pt-0 px-6 lg:px-8 flex flex-row justify-center items-start">
+    <div class="p-0.5 lg:p-1.5 2xl:p-2 flex-1 mr-6">&nbsp;</div>
+    <article class="article">
+      {{ content | safe }}
+    </article>
+    <aside class="bg-gray-300 p-0.5 lg:p-1.5 2xl:p-2 flex-1 ml-6 mt-8">
+      <div class="section-summary leading-none">
+        <h4>Review system</h4>
+        <p>
+          <span class="flex-1">Version:</span>
+          <span class="flex-1 "><strong>PC</strong></span>
+        </p>
+        <p>
+          <span class="flex-1">Platform:</span>
+          <span class="flex-1 "><strong>Steam</strong></span>
+        </p>
+        <p>
+          <span class="flex-1">Controls:</span>
+          <span class="flex-1 "><strong>Xbox 360 Controller</strong></span>
+        </p>
+      </div>
+      <ul class="tags-list">
+        This is the aside!
+      </ul>      
+    </aside>
+  </div>
+
+  {% if page.url !== "/about/" %}
+
+  <div class="font-sans w-full px-8 md:px-0 bg-blue-700 align-middle mt-0 mb-0">
+    <h3 class="text-center text-3xl tracking-normal mb-2 pt-2"><a href="/posts" class="border-transparent text-blue-100 hover:text-white">Other posts</a></h3>
+  {% if nextPost.url %}
+    <p class="text-center my-2 text-xl text-white leading-tight tracking-tight">
+      <strong>Next</strong>: 
+      <a class="border-transparent text-blue-100 hover:text-white hover:border-blue-100" href="{{ nextPost.url }}">{{ nextPost.data.title }}</a>
+    </p>
+  {% endif %}
+  {% if prevPost.url %}
+    <p class="text-center pb-4 my-2 text-xl text-white leading-tight tracking-tight">
+      <strong>Previous</strong>: 
+      <a class="border-transparent text-blue-100 hover:text-white hover:border-blue-100" href="{{ prevPost.url }}">{{ prevPost.data.title }}</a>
+    </p>
+  {% else %}
+    <p class="text-xs my-0 py-0 leading-tight">&nbsp;</p>
+  {% endif %}
+  </div>
+  {% endif %}

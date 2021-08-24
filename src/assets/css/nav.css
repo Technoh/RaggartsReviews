@@ -6,7 +6,7 @@ CSS-only and **accessible** menu based on... https://codepen.io/jonraedeke/pen/W
   @apply font-sans p-0 m-0;
 
   & a {
-    @apply block py-1 px-4 mb-1 text-white no-underline transition-opacity duration-500 ease-linear;
+    @apply block py-1 ml-4 mb-1 text-white no-underline transition-opacity duration-500 ease-linear leading-none;
 
     &:link, &:visited {
       @apply text-white;
@@ -141,7 +141,6 @@ nav {
       @apply opacity-100 relative;
     }
     & ul {
-      padding-right: 10%;
       @apply text-right;
     }
     & li {

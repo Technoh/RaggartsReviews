@@ -9,8 +9,8 @@
     <meta name="generator" content="Eleventy v{{ eleventyVersion }}" />
            
     {% if page.url == "/" %}
-      <title>{{ siteparams.siteTitle }}</title>
-      <meta property="og:title" content="{{ siteparams.siteTitle }}" />
+      <title>{{ title }}</title>
+      <meta property="og:title" content="{{ title }}" />
     {% else %}
       <title>{{ title }} | {{ siteparams.siteTitle }}</title>
       <meta property="og:title" content="{{ title }} | {{ siteparams.siteTitle }}" />
