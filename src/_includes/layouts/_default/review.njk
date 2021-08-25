@@ -7,30 +7,35 @@ layout: base
 
   {% include 'layouts/partials/billboard.njk' %}
 
-  <div class="pt-0 px-6 lg:px-8 flex flex-row justify-center items-start">
-    <div class="p-0.5 lg:p-1.5 2xl:p-2 flex-1 mr-6">&nbsp;</div>
+  <div class="p-0 flex flex-row justify-center items-start">
+    <div class="flex-1" style="flex-shrink: 3"></div>
     <article class="article">
       {{ content | safe }}
     </article>
-    <aside class="border-gray-300 border-t-4 border-r-4 p-0.5 lg:p-1.5 2xl:p-2 flex-1 ml-6 mt-8">
-      <div class="section-summary leading-none">
-        <h4>Review system</h4>
-        <p>
-          <span class="flex-1">Version:</span>
-          <span class="flex-1 "><strong>PC</strong></span>
-        </p>
-        <p>
-          <span class="flex-1">Platform:</span>
-          <span class="flex-1 "><strong>Steam</strong></span>
-        </p>
-        <p>
-          <span class="flex-1">Controls:</span>
-          <span class="flex-1 "><strong>Xbox 360 Controller</strong></span>
-        </p>
+    <aside class="flex-1">
+      <div class="border-4 m-3" style="min-width: 325px; max-width: 445px; border-color: #99CED3;">
+        <div class="section-summary leading-none">
+          <h4 class="mb-4">Review system</h4>
+          <p>
+            <span class="flex-1">Version:</span>
+            <span class="flex-1 "><strong>{{ version }}</strong></span>
+          </p>
+          <p>
+            <span class="flex-1">Platform:</span>
+            <span class="flex-1 "><strong>{{ platform }}</strong></span>
+          </p>
+          <p>
+            <span class="flex-1">Controls:</span>
+            <span class="flex-1 "><strong>{{ controls }}</strong></span>
+          </p>
+        </div>
+        <h4 class="mb-4 mt-4">Games by tag</h4>
+        <ul class="tags-list">
+{%- for currentTag in collections | keys | except(['all', 'post', 'reviews']) -%}
+          <li class="leading-tight my-2"><a href="/tags/{{ currentTag | urlencode }}/">{{ currentTag }}</a>: {{ collections[currentTag] | length }}</li>
+{%- endfor -%}
+        </ul>
       </div>
-      <ul class="tags-list">
-        This is the aside!
-      </ul>      
     </aside>
   </div>
 

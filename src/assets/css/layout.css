@@ -9,6 +9,8 @@ body {
 main {
   @apply pt-12;
   @apply bg-black;
+  background-image: url('/images/dark-triangles.png');
+  background-repeat: repeat;
 }
 
 p, li {
@@ -363,16 +365,8 @@ footer {
   @apply font-sans bg-white;
 }
 
-.lazypicturecaption {
-  @apply text-sm p-0 mt-2 leading-snug text-center;
-}
-
-.home-colOne p {
-  @apply leading-8 mb-4;
-}
-
-.home-colOne img {
-  @apply my-4;
+footer p {
+  @apply mb-0;
 }
 
 .container-comments {

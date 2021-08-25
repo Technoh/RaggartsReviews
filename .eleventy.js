@@ -30,7 +30,7 @@ async function imageShortcode(src, alt, cssClasses = "") {
   let highsrc = metadata.jpeg[metadata.jpeg.length - 1]
   return `<picture>
     ${Object.values(metadata).map(imageFormat => {
-      return `  <source type="${imageFormat[0].sourceType}" srcset="${imageFormat.map(entry => entry.srcset).join(", ")}" sizes="${sizes}">`
+      return `  <source type="${imageFormat[0].sourceType}" srcset="${imageFormat.map(entry => encodeURI(entry.url) + ` ${entry.width}w`).join(", ")}" sizes="${sizes}">`
     }).join("\n")}
     <img
       class="${ cssClasses ? cssClasses : 'mx-auto'}"
@@ -44,12 +44,18 @@ async function imageShortcode(src, alt, cssClasses = "") {
   </picture>`
 }
 
+function copyrightYear(startYear) {
+  const thisYear = new Date().getFullYear();
+  return (thisYear != startYear ? `${startYear}-${thisYear}` : `${startYear}`);
+}
+
 module.exports = function(eleventyConfig) {
-  
   eleventyConfig.addNunjucksAsyncShortcode("image", imageShortcode)
   eleventyConfig.addLiquidShortcode("image", imageShortcode)
-  // === Liquid needed if `markdownTemplateEngine` **isn't** changed from Eleventy default
   eleventyConfig.addJavaScriptFunction("image", imageShortcode)
+  eleventyConfig.addNunjucksShortcode("copyrightYear", copyrightYear)
+  eleventyConfig.addLiquidShortcode("copyrightYear", copyrightYear)
+  eleventyConfig.addJavaScriptFunction("copyrightYear", copyrightYear)
 
   eleventyConfig.addPlugin(svgContents)
 
@@ -88,6 +94,13 @@ module.exports = function(eleventyConfig) {
 
   eleventyConfig.addFilter('readableDateFromISO', dateObject => {
     return DateTime.fromISO(dateObject).toFormat('LLL d, yyyy h:mm:ss a ZZZZ')
+  });
+
+  eleventyConfig.addFilter("keys", obj => Object.keys(obj));
+
+  eleventyConfig.addFilter("except", (startingData=[], valuesToDelete = []) => {
+    const newData = startingData.filter((currentItem) => valuesToDelete.indexOf(currentItem) == -1);
+    return newData.sort();
   });
 
   // https://www.11ty.dev/docs/layouts/
