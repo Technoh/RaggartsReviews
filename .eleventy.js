@@ -49,13 +49,15 @@ function copyrightYear(startYear) {
   return (thisYear != startYear ? `${startYear}-${thisYear}` : `${startYear}`);
 }
 
+const getSimilarTags = (tagsFirstItem, tagsSecondItem) => tagsFirstItem.filter(Set.prototype.has, new Set(tagsSecondItem)).length;
+
 module.exports = function(eleventyConfig) {
-  eleventyConfig.addNunjucksAsyncShortcode("image", imageShortcode)
-  eleventyConfig.addLiquidShortcode("image", imageShortcode)
-  eleventyConfig.addJavaScriptFunction("image", imageShortcode)
-  eleventyConfig.addNunjucksShortcode("copyrightYear", copyrightYear)
-  eleventyConfig.addLiquidShortcode("copyrightYear", copyrightYear)
-  eleventyConfig.addJavaScriptFunction("copyrightYear", copyrightYear)
+  eleventyConfig.addNunjucksAsyncShortcode("image", imageShortcode);
+  eleventyConfig.addLiquidShortcode("image", imageShortcode);
+  eleventyConfig.addJavaScriptFunction("image", imageShortcode);
+  eleventyConfig.addNunjucksShortcode("copyrightYear", copyrightYear);
+  eleventyConfig.addLiquidShortcode("copyrightYear", copyrightYear);
+  eleventyConfig.addJavaScriptFunction("copyrightYear", copyrightYear);
 
   eleventyConfig.addPlugin(svgContents)
 
@@ -67,6 +69,18 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy('./src/assets/svg')
   eleventyConfig.addPassthroughCopy('./src/images')
 
+  eleventyConfig.addFilter("similarGames", (collection, path, tags) => {
+    const result = collection.filter((post) => {
+      return getSimilarTags(post.data.tags, tags) >= 1 && post.inputPath !== path;
+    }).sort((firstItem, secondItem) => {
+      return getSimilarTags(secondItem.data.tags, tags) - getSimilarTags(firstItem.data.tags, tags);
+    });
+
+    console.log("Result:", result);
+
+    return result;
+  });
+  
   eleventyConfig.addFilter("readableDate", dateObject => {
     return DateTime.fromJSDate(dateObject, {zone: 'utc'}).toFormat("dd LLL yyyy")
   });

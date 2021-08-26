@@ -1,3 +1,15 @@
+/**
+ Couleurs potentielles:
+  /*color: #ff4532;
+  color: #c3f0c8;
+  color: #7395ae;
+  color: #557a95;
+  color: #501b1d;
+  color: #8ee4af;
+  color: #cc3300;
+  color: #66fcf1;
+*/
+
 html, body {
   @apply dark:bg-black;
 }
@@ -6,11 +18,17 @@ body {
   @apply font-sans dark:text-gray-200;
 }
 
+header a:hover,
+header a:focus,
+header a:active {
+  text-decoration: none;
+}
+
 main {
   @apply pt-12;
-  @apply bg-black;
-  background-image: url('/images/dark-triangles.png');
-  background-repeat: repeat;
+  /*@apply bg-black;*/
+  /*background-image: url('/images/dark-triangles.png');
+  background-repeat: repeat;*/
 }
 
 p, li {
@@ -54,20 +72,18 @@ pre, code {
   @apply text-xs;
 }
 
-a, a:focus, a:hover, a:active {
-  @apply no-underline border-b border-solid border-blue-500;
-}
-
 nav a, nav a:focus, nav a:hover, nav a:active {
   @apply border-0 text-white hover:text-gray-300;
 }
 
 a {
-  @apply text-blue-500 dark:text-blue-200 dark:border-blue-200;
+  @apply dark:text-blue-200 dark:border-blue-200 no-underline;
+  color: #0b7385;
 }
 
 a:focus, a:hover, a:active {
-  @apply text-blue-800 border-blue-500;
+  @apply underline;
+  color: #08525f;
 }
 
 a:hover {
@@ -188,7 +204,7 @@ article h1, article h2, article h3, article h4 {
   @apply tracking-tight mt-8 mb-6 px-6;
 }
 
-article p, li {
+article p, article li {
   @apply text-lg mt-6 mb-6 leading-relaxed px-6;
 }
 
@@ -223,14 +239,8 @@ aside > div, aside > ul {
 }
 
 @media screen and (min-width: 768px) {
-  article p, li {
+  article p, article li {
     @apply text-xl leading-relaxed;
-  }
-}
-
-@media screen and (min-width: 1920px) {
-  article p, li {
-    @apply text-2xl leading-relaxed;
   }
 }
 
@@ -382,6 +392,17 @@ footer p {
   max-width: 750px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.tags-list {
+  @apply list-none pl-0;
+}
+
+.tags-list li {
+  @apply px-0 my-0 leading-snug text-xl;
+}
+
+.tags-list li a {
 }
 
 @media screen and (min-width: 900px) {

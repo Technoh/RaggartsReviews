@@ -5,57 +5,89 @@ layout: base
 
 <main>
 
-  {% include 'layouts/partials/billboard.njk' %}
+{%  include 'layouts/partials/billboard.njk' %}
 
   <div class="p-0 flex flex-row justify-center items-start">
     <div class="flex-1" style="flex-shrink: 3"></div>
     <article class="article">
       {{ content | safe }}
     </article>
-    <aside class="flex-1">
-      <div class="border-4 m-3" style="min-width: 325px; max-width: 445px; border-color: #99CED3;">
+    <aside class="flex-1 flex justify-center">
+      <div class="m-3" style="min-width: 325px; max-width: 445px;">
         <div class="section-summary leading-none">
-          <h4 class="mb-4">Review system</h4>
+          <h4 class="mb-4">Game details</h4>
+          <p>
+            <span class="flex-1">Released in:</span>
+            <span class="flex-1.5"><strong>{{ releaseYear }}</strong></span>
+          </p>
+          <p>
+            <span class="flex-1">Developer:</span>
+            <span class="flex-1"><strong>{{ developer }}</strong></span>
+          </p>
+          <p>
+            <span class="flex-1">Publisher:</span>
+            <span class="flex-1"><strong>{{ publisher }}</strong></span>
+          </p>
+          <p>
+            <span class="flex-1">Achievements / trophies:</span>
+            <span class="flex-1"><strong>{% if achievements %}Yes{% else %}No{% endif %}</strong></span>
+          </p>
+          <p>
+            <span class="flex-1">Controller:</span>
+            <span class="flex-1"><strong>{% if controllerSupport %}Yes{% else %}No{% endif %}</strong></span>
+          </p>
+          <h4 class="mb-4 mt-4">Review system</h4>
           <p>
             <span class="flex-1">Version:</span>
-            <span class="flex-1 "><strong>{{ version }}</strong></span>
+            <span class="flex-1"><strong>{{ version }}</strong></span>
           </p>
           <p>
             <span class="flex-1">Platform:</span>
-            <span class="flex-1 "><strong>{{ platform }}</strong></span>
+            <span class="flex-1"><strong>{{ platform }}</strong></span>
           </p>
           <p>
             <span class="flex-1">Controls:</span>
-            <span class="flex-1 "><strong>{{ controls }}</strong></span>
+            <span class="flex-1"><strong>{{ controls }}</strong></span>
           </p>
         </div>
-        <h4 class="mb-4 mt-4">Games by tag</h4>
+        <h4 class="mb-4 mt-4">Tags</h4>
         <ul class="tags-list">
-{%- for currentTag in collections | keys | except(['all', 'post', 'reviews']) -%}
-          <li class="leading-tight my-2"><a href="/tags/{{ currentTag | urlencode }}/">{{ currentTag }}</a>: {{ collections[currentTag] | length }}</li>
-{%- endfor -%}
+{%  for currentTag in tags %}
+        <li><a href="/tags/{{ currentTag | slug }}">{{ currentTag }}</a></li>
+{%  endfor %}
         </ul>
       </div>
     </aside>
   </div>
-
-  {% if page.url !== "/about/" %}
-
-  <div class="font-sans w-full px-8 md:px-0 bg-blue-700 align-middle mt-0 mb-0">
-    <h3 class="text-center text-3xl tracking-normal mb-2 pt-2"><a href="/posts" class="border-transparent text-blue-100 hover:text-white">Other posts</a></h3>
-  {% if nextPost.url %}
+{% set previousReview = page.data['previousReview'] %}
+{% set nextReview = page.data['nextReview'] %}
+  <div class="w-full px-8 md:px-0 text-center mt-0 mb-0 text-white" style="background-color: #08525f">
+    {% if nextReview %}
+    {{ nextReview | keys | dump(2) | safe }}
+    {% endif %}
+    <!--<h3 class="text-center text-3xl tracking-normal mb-2 pt-2">
+      <a href="/posts" class="border-transparent text-blue-100 hover:text-white">Other posts</a>
+    </h3>-->
+{%  set relatedGames = collections.reviews | similarGames(page.inputPath, tags) %}
+    <h4>Related games: </h4>
+{%  if relatedGames and relatedGames.length > 2 %}
+{%    set relatedGames = relatedGames | slice(2)%}
+{%  endif %}
+{%  for currentGame in relatedGames %}
+    <a class="mr-4 inline-block leading-none text-xl tracking-tight text-white" href="{{ currentGame.url }}">{{ currentGame.data.gameName }}</a>
+{%  endfor %}
+{%  if nextPost.url %}
     <p class="text-center my-2 text-xl text-white leading-tight tracking-tight">
       <strong>Next</strong>: 
       <a class="border-transparent text-blue-100 hover:text-white hover:border-blue-100" href="{{ nextPost.url }}">{{ nextPost.data.title }}</a>
     </p>
-  {% endif %}
-  {% if prevPost.url %}
+{%  endif %}
+{%  if prevPost.url %}
     <p class="text-center pb-4 my-2 text-xl text-white leading-tight tracking-tight">
       <strong>Previous</strong>: 
       <a class="border-transparent text-blue-100 hover:text-white hover:border-blue-100" href="{{ prevPost.url }}">{{ prevPost.data.title }}</a>
     </p>
-  {% else %}
+{%  else %}
     <p class="text-xs my-0 py-0 leading-tight">&nbsp;</p>
-  {% endif %}
+{%  endif %}
   </div>
-  {% endif %}

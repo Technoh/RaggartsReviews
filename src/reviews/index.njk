@@ -20,13 +20,15 @@ pagination:
   <div>
 {%  for currentReview in pagination.items | reverse %}
       <div>
-        {% image "Bastion/CaelondiaText.jpg", currentReview.data.description, "mt-10" %}
-        <h2 class="text-2xl lg:text-3xl 2xl:text-4xl mb-1 leading-tight tracking-tight"><a href="{{ currentReview.url }}">{{ currentReview.data.title }}</a><br />
+        {% image currentReview.data.heroImage, currentReview.data.description, "mt-10" %}
+        <h2 class="text-2xl mt-4 lg:text-3xl 2xl:text-4xl mb-1 leading-tight tracking-tight">
+          <a href="{{ currentReview.url }}">{{ currentReview.data.title }}</a>
+        </h2>
         <p class="text-sm dateInfo mt-4">
           <time class="inline" datetime="{{ currentReview.creationDate | htmlDateString }}">
             <strong>{{ currentReview.data.creationDate | htmlDateString }}</strong>
-{%    if currentReview.data.creationDate != currentReview.date %}
-              | updated <strong>{{ currentReview.date | htmlDateString }}</strong>
+{%-    if currentReview.data.creationDate != currentReview.date -%}
+              , updated <strong>{{ currentReview.date | htmlDateString }}</strong>
 {%    endif %}
           </time>
 {%    if currentReview.data.lastmod %}

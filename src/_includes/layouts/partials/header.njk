@@ -1,6 +1,6 @@
     <header class="h-12 bg-black dark:bg-blue-700 w-full fixed p-0 mt-0 z-50 px-5 top-0 left-0">
       <p class="text-white font-bold mt-2 pt-1 text-lg w-full leading-none">
-        <a href="/" class="font-sans text-white active:text-gray-400 hover:text-gray-400" style="border: 0 !important; text-decoration: none !important;">
+        <a href="/" class="font-sans text-white active:text-gray-400 hover:text-gray-400">
           Raggart's Reviews
         </a>
       </p>
@@ -14,7 +14,7 @@
       <nav role="navigation" class="nav">
         <ul class="nav__items">
           <li class="nav__item">
-            <a href="/about/" title="About">About</a>
+            <a href="/about/" title="About Raggart's Reviews">About</a>
           </li>
 {%- for review in collections.reviews | reverse -%}
 {%-   if loop.index0 < 1 -%}

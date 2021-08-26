@@ -1,0 +1,22 @@
+---js
+{
+  layout: "page",
+  pagination: {
+    data: "collections",
+    size: 1,
+    alias: "tag",
+  },
+  eleventyComputed: {
+    title: "{{ tag }} games",
+  },
+  permalink: "/tags/{{ tag | slug }}/",
+}
+---
+
+<h1 class="mb-4 mt-4">{{ tag }} games</h1>
+<ol class="tags-list">
+{% set taglist = collections[ tag ] %}
+{% for post in taglist %}
+  <li><a href="{{ post.url | url }}">{{ post.data.title }}</a></li>
+{% endfor %}
+</ol>
