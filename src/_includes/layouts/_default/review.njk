@@ -4,9 +4,7 @@ layout: base
 ---
 
 <main>
-
 {%  include 'layouts/partials/billboard.njk' %}
-
   <div class="p-0 flex flex-row justify-center items-start">
     <div class="flex-1" style="flex-shrink: 3"></div>
     <article class="article">
@@ -59,35 +57,30 @@ layout: base
       </div>
     </aside>
   </div>
-{% set previousReview = page.data['previousReview'] %}
-{% set nextReview = page.data['nextReview'] %}
-  <div class="w-full px-8 md:px-0 text-center mt-0 mb-0 text-white" style="background-color: #08525f">
-    {% if nextReview %}
-    {{ nextReview | keys | dump(2) | safe }}
-    {% endif %}
-    <!--<h3 class="text-center text-3xl tracking-normal mb-2 pt-2">
-      <a href="/posts" class="border-transparent text-blue-100 hover:text-white">Other posts</a>
-    </h3>-->
+  <div class="w-full px-4 text-center mt-0 mb-0 pb-1 text-white flex justify-start leading-none" style="background-color: #08525f">
+    <div class="flex-1 m-0 p-0 text-left flex flex-col justify-center items-start">
+{%  if previousReview %}
+      <a class="text-white hover:text-gray-100 focus:text-gray-100 active:text-gray-100 leading-none inline" href="{{ previousReview.url }}">↼ {{ previousReview.data.title }}</a>
+{%  endif %}
+    </div>
+    <div class="flex-1 m-0 p-0 text-center flex flex-col justify-center items-center">
 {%  set relatedGames = collections.reviews | similarGames(page.inputPath, tags) %}
-    <h4>Related games: </h4>
-{%  if relatedGames and relatedGames.length > 2 %}
-{%    set relatedGames = relatedGames | slice(2)%}
+{%  if relatedGames and relatedGames.length %}
+{%    if relatedGames.length > 2 %}
+{%      set relatedGames = relatedGames | slice(2)%}
+      <h4>Related games</h4>
+{%    else %}
+      <h4>Related game</h4>
+{%    endif %}
+{%    for currentGame in relatedGames %}
+      <a class="mr-4 inline-block text-xl tracking-tight text-white hover:text-gray-100 focus:text-gray-100 active:text-gray-100" href="{{ currentGame.url }}">{{ currentGame.data.gameName }}</a>
+{%    endfor %}
 {%  endif %}
-{%  for currentGame in relatedGames %}
-    <a class="mr-4 inline-block leading-none text-xl tracking-tight text-white" href="{{ currentGame.url }}">{{ currentGame.data.gameName }}</a>
-{%  endfor %}
-{%  if nextPost.url %}
-    <p class="text-center my-2 text-xl text-white leading-tight tracking-tight">
-      <strong>Next</strong>: 
-      <a class="border-transparent text-blue-100 hover:text-white hover:border-blue-100" href="{{ nextPost.url }}">{{ nextPost.data.title }}</a>
-    </p>
+    </div>
+    <div class="flex-1 m-0 p-0 text-right flex flex-col justify-center items-start">
+{%  if nextReview %}
+      <a class="text-white hover:text-gray-100 focus:text-gray-100 active:text-gray-100" href="{{ nextReview.url }}">{{ nextReview.data.title }} ⇀</a>
 {%  endif %}
-{%  if prevPost.url %}
-    <p class="text-center pb-4 my-2 text-xl text-white leading-tight tracking-tight">
-      <strong>Previous</strong>: 
-      <a class="border-transparent text-blue-100 hover:text-white hover:border-blue-100" href="{{ prevPost.url }}">{{ prevPost.data.title }}</a>
-    </p>
-{%  else %}
-    <p class="text-xs my-0 py-0 leading-tight">&nbsp;</p>
-{%  endif %}
+    </div>
   </div>
+</main>

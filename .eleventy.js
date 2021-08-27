@@ -4,28 +4,40 @@ const ErrorOverlay = require('eleventy-plugin-error-overlay')
 const svgContents = require("eleventy-plugin-svg-contents")
 const path = require ('path')
 const Image = require('@11ty/eleventy-img')
+const slugify = require('slugify') // Disponible parce que slugify fait partie intégrante d'Eleventy
 
-async function imageShortcode(src, alt, cssClasses = "") {
+function imageShortcode(src, alt, cssClasses = "") {
   let sizes = "(min-width: 1024px) 100vw, 50vw"
   let srcPrefix = `./src/assets/images/`
   // ... so you don't have to enter path info for each ref, but also means you have to store them there --- which probably is best (IMHO)
   src = srcPrefix + src
-  console.log(`Generating image(s) from:  ${src}`)
+  console.log(`----|---- Generating image(s) from: ${src} ----|----`)
   if(alt === undefined) {
     // Throw an error on missing alt (alt="" works okay)
     throw new Error(`Missing \`alt\` on responsiveimage from: ${src}`)
   }  
-  let metadata = await Image(src, {
-    widths: [600, 900, 1400, 1800],
+
+  const imageCreationOptions = {
+    widths: [320, 600, 750, 900, 1400, 1800],
     formats: ['webp', 'jpeg'],
     urlPath: "/images/",
     outputDir: "./_site/images/",
     filenameFormat: function (id, src, width, format, options) {
-      const extension = path.extname(src)
-      const name = path.basename(src, extension)
-      return `${name}-${width}w.${format}`
+      const extension = path.extname(src);
+      const name = slugify(path.basename(src).toLowerCase());
+      const dirname = path.dirname(src).replace('./src/assets/images/', '');
+      return `${dirname}-${name}-${width}w.${format}`;
     }
-  })  
+  };
+
+  /**
+   * Appel qui va créer le fichier d'image pour vrai.
+   * Voir https://github.com/11ty/eleventy-img/issues/81
+   * Voir https://www.11ty.dev/docs/plugins/image/#synchronous-usage
+   */
+   Image(src, imageCreationOptions);
+  let metadata = Image.statsSync(src, imageCreationOptions);
+
   let lowsrc = metadata.jpeg[0]
   let highsrc = metadata.jpeg[metadata.jpeg.length - 1]
   return `<picture>
@@ -52,7 +64,7 @@ function copyrightYear(startYear) {
 const getSimilarTags = (tagsFirstItem, tagsSecondItem) => tagsFirstItem.filter(Set.prototype.has, new Set(tagsSecondItem)).length;
 
 module.exports = function(eleventyConfig) {
-  eleventyConfig.addNunjucksAsyncShortcode("image", imageShortcode);
+  eleventyConfig.addNunjucksShortcode("image", imageShortcode);
   eleventyConfig.addLiquidShortcode("image", imageShortcode);
   eleventyConfig.addJavaScriptFunction("image", imageShortcode);
   eleventyConfig.addNunjucksShortcode("copyrightYear", copyrightYear);
@@ -75,8 +87,6 @@ module.exports = function(eleventyConfig) {
     }).sort((firstItem, secondItem) => {
       return getSimilarTags(secondItem.data.tags, tags) - getSimilarTags(firstItem.data.tags, tags);
     });
-
-    console.log("Result:", result);
 
     return result;
   });

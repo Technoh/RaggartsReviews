@@ -387,11 +387,18 @@ footer p {
   margin-bottom: 0;
 }
 
+/** Styles spécifiques pour sections choisies */
 .conteneur-principal {
   @apply bg-white;
   max-width: 750px;
   margin-left: auto;
   margin-right: auto;
+}
+
+@media screen and (min-width: 900px) {
+  .container-comments {
+    width: 40%;
+  }
 }
 
 .tags-list {
@@ -405,8 +412,6 @@ footer p {
 .tags-list li a {
 }
 
-@media screen and (min-width: 900px) {
-  .container-comments {
-    width: 40%;
-  }
+.conteneur-resume {
+  width: 750px;
 }

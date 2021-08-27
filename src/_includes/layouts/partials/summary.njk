@@ -1,0 +1,22 @@
+<div class="conteneur-resume text-base mb-6">
+  {% image currentReview.data.bannerImage, currentReview.data.bannerAltText, "mt-8 mb-4" %}
+  <h2 class="text-4xl mb-4"><a class="" href="{{ currentReview.data.permalink }}">{{ currentReview.data.gameName }}</a></h2>
+  <p class="text-sm dateInfo mt-4">
+    <time class="inline" datetime="{{ currentReview.creationDate | htmlDateString }}">
+      <strong>{{ currentReview.data.creationDate | htmlDateString }}</strong>
+{%-    if currentReview.data.data.creationDate != currentReview.data.date -%}
+        , updated <strong>{{ currentReview.data.date | htmlDateString }}</strong>
+{%    endif %}
+    </time>
+{%    if currentReview.data.lastmod %}
+    <br />Last modified <time class="inline" datetime="{{ currentReview.date | htmlDateString }}">{{ currentReview.data.lastmod | htmlDateString }}</time>
+{%    endif %}
+  </p>
+
+  <p>{{ currentReview.data.description }}</p>
+  <p>My verdict: <strong>{{ currentReview.data.verdict }}</strong></p>
+  <p class="text-right">
+{%  set reviewLinkText %}Read the complete {{ currentReview.data.gameName }} review  ⇀{% endset %}
+    <a class="text-lg" href="{{ currentReview.data.permalink }}">{{ reviewLinkText }}</a>
+  </p>
+</div>
