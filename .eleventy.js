@@ -5,6 +5,7 @@ const svgContents = require("eleventy-plugin-svg-contents")
 const path = require ('path')
 const Image = require('@11ty/eleventy-img')
 const slugify = require('slugify') // Disponible parce que slugify fait partie intégrante d'Eleventy
+const fs = require('fs');
 
 function imageShortcode(src, alt, cssClasses = "") {
   let sizes = "(min-width: 1024px) 100vw, 50vw"
@@ -12,6 +13,7 @@ function imageShortcode(src, alt, cssClasses = "") {
   // ... so you don't have to enter path info for each ref, but also means you have to store them there --- which probably is best (IMHO)
   src = srcPrefix + src
   console.log(`----|---- Generating image(s) from: ${src} ----|----`)
+  
   if(alt === undefined) {
     // Throw an error on missing alt (alt="" works okay)
     throw new Error(`Missing \`alt\` on responsiveimage from: ${src}`)
@@ -90,7 +92,7 @@ module.exports = function(eleventyConfig) {
 
     return result;
   });
-  
+
   eleventyConfig.addFilter("readableDate", dateObject => {
     return DateTime.fromJSDate(dateObject, {zone: 'utc'}).toFormat("dd LLL yyyy")
   });
@@ -119,6 +121,8 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addFilter('readableDateFromISO', dateObject => {
     return DateTime.fromISO(dateObject).toFormat('LLL d, yyyy h:mm:ss a ZZZZ')
   });
+
+  eleventyConfig.addFilter('getPermalink', inputPath => `/reviews/${path.basename(inputPath, path.extname(inputPath))}`);
 
   eleventyConfig.addFilter("keys", obj => Object.keys(obj));
 
@@ -200,7 +204,8 @@ module.exports = function(eleventyConfig) {
   })
 
   eleventyConfig.addCollection("reviews", function(collectionApi) {
-    const reviews = collectionApi.getFilteredByGlob("src/reviews/*.njk");
+    const reviews = collectionApi.getFilteredByGlob("src/reviews/*.njk").sort((firstReview, secondReview) => firstReview.data.creationDate < secondReview.data.creationDate ? 1 : -1);
+    console.log("*/*////*\n*/*/*/*/*/Reviews en ordre: ", reviews);
 
     // Ajout d'un lien vers la critique précédente et suivante, s'il y a lieu.
     for(let reviewCounter = 0; reviewCounter < reviews.length; reviewCounter++) {

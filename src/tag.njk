@@ -13,10 +13,12 @@
 }
 ---
 
-<h1 class="mb-4 mt-4">{{ tag }} games</h1>
-<ol class="tags-list">
-{% set taglist = collections[ tag ] %}
-{% for post in taglist %}
-  <li><a href="{{ post.url | url }}">{{ post.data.title }}</a></li>
-{% endfor %}
-</ol>
+<div class="conteneur-principal font-sans">
+  <h1 class="text-3xl lg:text-5xl 2xl:text-6xl pt-6 text-center">{{ title }}</h1>
+  <div>
+{%  set taglist = collections[ tag ] %}
+{%  for currentReview in taglist %}
+{%    include "layouts/partials/summary.njk" %}
+{%  endfor %}
+  </div>
+</div>

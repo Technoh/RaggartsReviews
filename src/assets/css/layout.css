@@ -15,7 +15,7 @@ html, body {
 }
 
 body {
-  @apply font-sans dark:text-gray-200;
+  @apply font-sans dark:text-gray-200 m-0 h-screen flex flex-col;
 }
 
 header a:hover,
@@ -372,11 +372,15 @@ hr {
 }
 
 footer {
-  @apply font-sans bg-white;
+  @apply font-sans mt-auto bg-black text-white;
 }
 
 footer p {
   @apply mb-0;
+}
+
+footer a:hover, footer a:active, footer a:focus {
+  color: #12a3bd;
 }
 
 .container-comments {
@@ -387,18 +391,20 @@ footer p {
   margin-bottom: 0;
 }
 
-/** Styles spécifiques pour sections choisies */
-.conteneur-principal {
-  @apply bg-white;
-  max-width: 750px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 @media screen and (min-width: 900px) {
   .container-comments {
     width: 40%;
   }
+}
+
+/** Styles spécifiques pour sections choisies */
+.conteneur-principal {
+  @apply bg-white mx-auto;
+  max-width: 750px;
+}
+
+.related-games a + a {
+  @apply ml-4;
 }
 
 .tags-list {
@@ -407,11 +413,4 @@ footer p {
 
 .tags-list li {
   @apply px-0 my-0 leading-snug text-xl;
-}
-
-.tags-list li a {
-}
-
-.conteneur-resume {
-  width: 750px;
 }

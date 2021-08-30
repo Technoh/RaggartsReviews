@@ -1,19 +1,37 @@
 <div class="billboard text-center pb-4 lg:pb-6 2xl:pb-8">
-{% if heroImage and heroAltText %}
+{%  if heroImage and heroAltText %}
   <div class="hero-image bg-black">
     {% image heroImage, heroAltText %}
   </div>
-{% endif %}
+{%  else %}
+  <div class="hero-image bg-black">
+    {% image currentReview.heroImage, currentReview.heroAltText %}
+  </div>
+{%  endif %}
   <div>
-    <h1 class="text-3xl lg:text-6xl 2xl:text-8xl">{{ gameName }}</h1>
+    <h1 class="text-3xl lg:text-6xl 2xl:text-8xl mt-3">
+      {%- if beforeTitle %}{{ beforeTitle }}{% endif -%}
+      {{ gameName if gameName else currentReview.gameName }}
+    </h1>
     <p class="mb-0 mt-4 lg:mt-6 2xl:mt-8">
+{%  if creationDate %}
       Created on <strong>{{ creationDate | htmlDateString }}</strong>
-{% if wasUpdated %}
-      and last updated on <strong>{{ page.date | htmlDateString }}</strong>
-{% endif %}
+{%  else %}
+      Created on <strong>{{ currentReview.creationDate | htmlDateString }}</strong>
+{%  endif %}
+{%  if wasUpdated or currentReview.wasUpdated %}
+{%    if modificationDate %}
+      and last updated on <strong>{{ modificationDate | htmlDateString }}</strong>
+{%    else %}
+      and last updated on <strong>{{ currentReview.modificationDate | htmlDateString }}</strong>
+{%    endif %}
+{%  endif %}
     </p>
-{% if lastPlayed %}
+{%  if lastPlayed %}
     <p class="mb-0 mt-1 lg:mt-2 2xl:mt-4">Last played in <strong>{{ lastPlayed | displayMonthYear }}</strong></p>
-{% endif %}
+{%  else %}
+    <p class="mb-0 mt-1 lg:mt-2 2xl:mt-4">Last played in <strong>{{ currentReview.lastPlayed | displayMonthYear }}</strong></p>
+
+{%  endif %}
   </div>
 </div>

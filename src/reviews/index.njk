@@ -6,18 +6,19 @@ description: "All of Raggart's videogame reviews, by descending chronological or
 pagination: 
   data: collections.reviews
   size: 5
-  reverse: true
 ---
 
 <div class="font-sans text-center px-10 w-full md:w-2/3 lg:w-1/2 mx-auto bg-white">
-  <h1 class="tracking-tight pt-8 lg:pt-10 2xl:pt-12 text-5xl">{{ title }}</h1>
+  <h1 class="tracking-tight pt-5 lg:pt-6 2xl:pt-8 text-5xl">
+    {{ title }}
+  </h1>
   <div class="post-line"></div>
   <div>
 {%  for currentReview in pagination.items %}
 {%    include "layouts/partials/summary.njk" %}
 {%  endfor %}
     <hr class="mt-6" />
-    <p class="text-center text-sm mt-2 mb-1">
+    <p class="text-center text-sm mt-2 mb-4">
 {%  if pagination.firstPageHref != page.url %}
       <a class="border-transparent" aria-label="First page" href={{ pagination.firstPageHref}}>{{ '/src/assets/svg/svgPrevPageIcon.svg' | svgContents | safe }}{{ '/src/assets/svg/svgPrevPageIcon.svg' | svgContents | safe }}</a>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
