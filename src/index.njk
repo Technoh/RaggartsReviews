@@ -7,7 +7,8 @@
   beforeTitle: "Latest review: "
 ---
 
-{%  set currentReview = collections.reviews | last %}
+{%  set currentReview = collections.reviews | first %}
 {%  set reviewContent = currentReview.templateContent %}
+{%  set currentPath = currentReview.inputPath %}
 {%  set currentReview = currentReview.data %}
 {%  include "layouts/partials/review.njk" %}

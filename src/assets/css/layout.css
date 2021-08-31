@@ -214,6 +214,10 @@ article img.containedImage {
   @apply w-full h-auto;
 }
 
+article.critique picture > img {
+  @apply mx-auto;
+}
+
 aside > div, aside > ul {
   @apply bg-white p-2;
 }

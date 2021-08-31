@@ -16,11 +16,8 @@
           <li class="nav__item">
             <a href="/about/" title="About Raggart's Reviews">About</a>
           </li>
-{%- for review in collections.reviews | reverse -%}
-{%-   if loop.index0 < 1 -%}
-          <li class="nav__item"><a href="{{ review.url }}" title="Latest review">Latest review</a></li>
-{%-   endif -%}
-{%- endfor -%}
+{%- set latestReview = collections.reviews | first -%}
+          <li class="nav__item"><a href="{{ latestReview.url }}" title="Latest review: {{ latestReview.data.gameName }}">Latest review</a></li>
           <li class="nav__item">
             <a href="/reviews/" title="All videogame reviews in descending chronological order">All reviews</a>
           </li>

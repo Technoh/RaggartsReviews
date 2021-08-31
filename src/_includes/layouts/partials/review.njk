@@ -2,7 +2,7 @@
 {%  include 'layouts/partials/billboard.njk' %}
   <div class="p-0 flex flex-row justify-center items-start">
     <div class="flex-1" style="flex-shrink: 3"></div>
-    <article class="article">
+    <article class="critique">
 {%  if reviewContent %}
       {{ reviewContent | safe }}
 {%  else %}
@@ -68,7 +68,11 @@
       <a class="text-white hover:text-gray-100 focus:text-gray-100 active:text-gray-100 leading-none inline" href="{{ previousReview.url }}">↼ {{ previousReview.data.title }}</a>
 {%  endif %}
     </div>
-{%  set relatedGames = collections.reviews | similarGames(page.inputPath, tags) %}
+{%  if currentPath %}
+{%    set relatedGames = collections.reviews | similarGames(currentPath, tags) %}
+{%  else %}
+{%    set relatedGames = collections.reviews | similarGames(page.inputPath, tags) %}
+{%  endif %}
 {%  if relatedGames and relatedGames.length %}
     <div class="related-games flex-1 m-0 p-0 text-center flex flex-col justify-center items-center">
 {%    if relatedGames.length > 1 %}
