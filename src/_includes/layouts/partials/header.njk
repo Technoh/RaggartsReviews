@@ -13,14 +13,10 @@
       </label>
       <nav role="navigation" class="nav">
         <ul class="nav__items">
-          <li class="nav__item">
-            <a href="/about/" title="About Raggart's Reviews">About</a>
-          </li>
 {%- set latestReview = collections.reviews | first -%}
           <li class="nav__item"><a href="{{ latestReview.url }}" title="Latest review: {{ latestReview.data.gameName }}">Latest review</a></li>
-          <li class="nav__item">
-            <a href="/reviews/" title="All videogame reviews in descending chronological order">All reviews</a>
-          </li>
+          <li class="nav__item"><a href="/reviews/" title="All videogame reviews in descending chronological order">All reviews</a></li>
+          <li class="nav__item"><a href="/about/" title="About Raggart's Reviews">About</a></li>
         </ul>
       </nav>
     </header>

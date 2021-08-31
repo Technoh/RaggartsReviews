@@ -204,7 +204,7 @@ article h1, article h2, article h3, article h4 {
   @apply tracking-tight mt-8 mb-6 px-6;
 }
 
-article p, article li {
+article p {
   @apply text-lg mt-6 mb-6 leading-relaxed px-6;
 }
 
@@ -217,6 +217,14 @@ article img.containedImage {
 article.critique picture > img {
   @apply mx-auto;
 }
+
+article.critique ul {
+  @apply list-disc;
+}
+
+  article.critique ul li {
+    @apply list-outside leading-tight mb-3 ml-6;
+  }
 
 aside > div, aside > ul {
   @apply bg-white p-2;
