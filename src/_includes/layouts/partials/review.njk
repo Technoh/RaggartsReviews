@@ -1,16 +1,16 @@
 <main>
 {%  include 'layouts/partials/billboard.njk' %}
-  <div class="p-0 flex flex-row justify-center items-start">
-    <div class="flex-1" style="flex-shrink: 3"></div>
-    <article class="critique">
+  <div class="p-0 lg:flex lg:flex-row lg:justify-center lg:items-start">
+    <div class="hidden lg:block lg:flex-1" style="flex-shrink: 3"></div>
+    <article class="critique block mx-auto lg:mx-0">
 {%  if reviewContent %}
       {{ reviewContent | safe }}
 {%  else %}
       {{ content | safe }}
 {%  endif %}
     </article>
-    <aside class="flex-1 flex justify-center">
-      <div class="m-3" style="min-width: 325px; max-width: 445px;">
+    <aside class="block lg:flex-1 flex justify-start lg:justify-center mb-6 mx-auto lg:mx-0">
+      <div class="lg:m-3 pl-6 lg:p-0" style="min-width: 325px; max-width: 445px;">
         <div class="section-summary leading-none">
           <h4 class="mb-4">Game details</h4>
           <p>
@@ -59,43 +59,40 @@
       </div>
     </aside>
   </div>
-  <div class="w-full px-4 text-center mt-0 mb-0 pb-1 text-white flex justify-start leading-none" style="background-color: #08525f">
-    <div class="flex-1 m-0 p-0 text-left flex flex-col justify-center items-start">
-{%  if currentReview %}
-{%    set previousReview = currentReview.previousReview if currentReview %}
-{%  endif %}
-{%  if previousReview %}
-      <a class="text-white hover:text-gray-100 focus:text-gray-100 active:text-gray-100 leading-none inline" href="{{ previousReview.url }}">↼ {{ previousReview.data.title }}</a>
-{%  endif %}
-    </div>
+  <div class="w-full px-4 text-center mt-0 mb-0 pb-1 text-white flex flex-row flex-wrap md:flex-nowrap leading-none" style="background-color: #08525f">
 {%  if currentPath %}
 {%    set relatedGames = collections.reviews | similarGames(currentPath, tags) %}
 {%  else %}
 {%    set relatedGames = collections.reviews | similarGames(page.inputPath, tags) %}
 {%  endif %}
 {%  if relatedGames and relatedGames.length %}
-    <div class="related-games flex-1 m-0 p-0 text-center flex flex-col justify-center items-center">
+    <div class="related-games m-0 mb-4 md:mb-0 p-0 text-center flex flex-col justify-center items-center md:order-2 w-full md:w-auto md:flex-1">
 {%    if relatedGames.length > 1 %}
       <h4>Related games</h4>
-{%      if relatedGames.length > 2 %}
-{%        set relatedGames = relatedGames | slice(0, 2)%}
-{%      endif %}
 {%    else %}
       <h4>Related game</h4>
 {%    endif %}
       <div>
-{%    for currentGame in relatedGames %}
+{%    for currentGame in relatedGames | limit(2) %}
         <a class="inline-block text-xl tracking-tight text-white hover:text-gray-100 focus:text-gray-100 active:text-gray-100" href="{{ currentGame.url }}">{{ currentGame.data.gameName }}</a>
 {%    endfor %}
       </div>
     </div>
 {%  endif %}
-    <div class="flex-1 m-0 p-0 text-right flex flex-col justify-center items-end">
+    <div class="m-0 p-0 text-left md:flex md:flex-col md:justify-center md:items-start md:order-1 w-1/2 md:w-auto mb-4 md:mb-0 md:flex-1">
+{%  if currentReview %}
+{%    set previousReview = currentReview.previousReview if currentReview %}
+{%  endif %}
+{%  if previousReview %}
+      <a class="text-white hover:text-gray-100 focus:text-gray-100 active:text-gray-100 leading-none inline" href="{{ previousReview.url }}">↼&nbsp;{{ previousReview.data.title }}</a>
+{%  endif %}
+    </div>
+    <div class="m-0 p-0 text-right md:flex md:flex-col md:justify-center md:items-end md:order-3 w-1/2 md:w-auto mb-4 md:mb-0 md:flex-1">
 {%  if currentReview %}
 {%    set nextReview = currentReview.nextReview if currentReview %}
 {%  endif %}
 {%  if nextReview %}
-      <a class="text-white hover:text-gray-100 focus:text-gray-100 active:text-gray-100" href="{{ nextReview.url }}">{{ nextReview.data.title }} ⇀</a>
+      <a class="text-white hover:text-gray-100 focus:text-gray-100 active:text-gray-100" href="{{ nextReview.url }}">{{ nextReview.data.title }}&nbsp;⇀</a>
 {%  endif %}
     </div>
   </div>

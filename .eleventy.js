@@ -83,12 +83,18 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy('./src/assets/svg')
   eleventyConfig.addPassthroughCopy('./src/images')
 
+  eleventyConfig.addNunjucksFilter("limit", (arrayToProcess, limit) => arrayToProcess.slice(0, limit));
+
   eleventyConfig.addFilter("similarGames", (collection, path, tags) => {
     const result = collection.filter((post) => {
       return getSimilarTags(post.data.tags, tags) >= 1 && post.inputPath !== path;
     }).sort((firstItem, secondItem) => {
       return getSimilarTags(secondItem.data.tags, tags) - getSimilarTags(firstItem.data.tags, tags);
     });
+
+    if(path.indexOf('bastion') > 0) {
+      //console.log("*-*-*-*-*-*-*-*-*-* SiMILaR: ", path, tags, result.map((currentReview) => currentReview.fileSlug));
+    }
 
     return result;
   });
@@ -205,8 +211,6 @@ module.exports = function(eleventyConfig) {
 
   eleventyConfig.addCollection("reviews", function(collectionApi) {
     const reviews = collectionApi.getFilteredByGlob("src/reviews/*.njk").sort((firstReview, secondReview) => firstReview.data.creationDate < secondReview.data.creationDate ? 1 : -1);
-    console.log("*/*////*\n*/*/*/*/*/Reviews en ordre: ", reviews);
-
     // Ajout d'un lien vers la critique précédente et suivante, s'il y a lieu.
     for(let reviewCounter = 0; reviewCounter < reviews.length; reviewCounter++) {
       if(reviews[reviewCounter - 1]) {
