@@ -433,5 +433,5 @@ footer a:hover, footer a:active, footer a:focus {
 }
 
 .tags-list li {
-  @apply px-0 my-0 leading-snug text-xl;
+  @apply px-0 my-0 leading-snug lg:text-xl;
 }
