@@ -5,6 +5,11 @@
     data: "collections",
     size: 1,
     alias: "tag",
+    filter: [
+      'longform',
+      'mediumform',
+      'shortform',
+    ]
   },
   eleventyComputed: {
     title: "{{ tag }} games",

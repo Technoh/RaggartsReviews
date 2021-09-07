@@ -85,16 +85,14 @@ module.exports = function(eleventyConfig) {
 
   eleventyConfig.addNunjucksFilter("limit", (arrayToProcess, limit) => arrayToProcess.slice(0, limit));
 
+  eleventyConfig.addFilter("removeUselessTags", (tagsArray) => tagsArray.filter((currentItem) => ['shortform', 'mediumform', 'longform'].indexOf(currentItem) == -1));
+
   eleventyConfig.addFilter("similarGames", (collection, path, tags) => {
     const result = collection.filter((post) => {
       return getSimilarTags(post.data.tags, tags) >= 1 && post.inputPath !== path;
     }).sort((firstItem, secondItem) => {
       return getSimilarTags(secondItem.data.tags, tags) - getSimilarTags(firstItem.data.tags, tags);
     });
-
-    if(path.indexOf('bastion') > 0) {
-      //console.log("*-*-*-*-*-*-*-*-*-* SiMILaR: ", path, tags, result.map((currentReview) => currentReview.fileSlug));
-    }
 
     return result;
   });
@@ -230,7 +228,8 @@ module.exports = function(eleventyConfig) {
     dir: {
       input: 'src', // <--- everything else in 'dir' is relative to this directory! https://www.11ty.dev/docs/config/#directory-for-includes
       data: '../_data',
-      includes: '_includes'
+      includes: '_includes',
+      output: '_site',
     },
     templateFormats: [
       'html',
