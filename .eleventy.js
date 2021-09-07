@@ -126,7 +126,7 @@ module.exports = function(eleventyConfig) {
     return DateTime.fromISO(dateObject).toFormat('LLL d, yyyy h:mm:ss a ZZZZ')
   });
 
-  eleventyConfig.addFilter('getPermalink', inputPath => `/reviews/${path.basename(inputPath, path.extname(inputPath))}`);
+  eleventyConfig.addFilter('getPermalink', inputPath => `/reviews/${path.basename(inputPath, path.extname(inputPath))}/`);
 
   eleventyConfig.addFilter("keys", obj => Object.keys(obj));
 
