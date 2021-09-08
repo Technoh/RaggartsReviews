@@ -8,10 +8,12 @@
   <p class="text-sm dateInfo mt-4 text-center">
     <time class="inline" datetime="{{ currentReview.creationDate | htmlDateString }}">
       <strong>{{ currentReview.data.creationDate | htmlDateString }}</strong>
-{%-    if currentReview.data.modificationDate != currentReview.data.creationDate -%}
+{%- if currentReview.data.modificationDate != currentReview.data.creationDate -%}
         , updated <strong>{{ currentReview.data.modificationDate | htmlDateString }}</strong>
-{%    endif %}
+{%  endif %}
     </time>
+    <span class="separateur-date-type">|</span>
+    <span class="texte-type-critique">{{ currentReview.data.tags | printFormType }} form review</span>
   </p>
 
   <p class="text-left">{{ currentReview.data.description }}</p>

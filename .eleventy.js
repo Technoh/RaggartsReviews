@@ -87,6 +87,20 @@ module.exports = function(eleventyConfig) {
 
   eleventyConfig.addFilter("removeUselessTags", (tagsArray) => tagsArray.filter((currentItem) => ['shortform', 'mediumform', 'longform'].indexOf(currentItem) == -1));
 
+  eleventyConfig.addFilter("printFormType", (tagsArray) => {
+    if(! tagsArray || ! tagsArray.length) {
+      return '';
+    }
+
+    if(tagsArray.indexOf('longform') > -1 ) {
+      return 'Long';
+    } else if(tagsArray.indexOf('mediumform') > -1 ) {
+      return 'Medium'
+    } else if(tagsArray.indexOf('shortform') > -1 ) {
+      return 'Short'
+    }
+  });
+
   eleventyConfig.addFilter("similarGames", (collection, path, tags) => {
     const result = collection.filter((post) => {
       return getSimilarTags(post.data.tags, tags) >= 1 && post.inputPath !== path;
