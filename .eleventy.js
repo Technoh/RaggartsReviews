@@ -1,13 +1,20 @@
 const { DateTime } = require('luxon')
 const htmlmin = require('html-minifier')
-const ErrorOverlay = require('eleventy-plugin-error-overlay')
 const svgContents = require("eleventy-plugin-svg-contents")
 const path = require ('path')
 const Image = require('@11ty/eleventy-img')
 const slugify = require('slugify') // Disponible parce que slugify fait partie intégrante d'Eleventy
 const fs = require('fs');
 
-function imageShortcode(src, alt, cssClasses = "") {
+/**
+ * 
+ * @param {*} src 
+ * @param {*} alt 
+ * @param {*} cssClasses 
+ * @param {object} source Un objet contenant deux membres, `url` et `name`. Permet d'ajouter un lien vers la source de l'image.
+ * @returns 
+ */
+function imageShortcode(src, alt, cssClasses = "", source = null) {
   let sizes = "(min-width: 1024px) 100vw, 50vw"
   let srcPrefix = `./src/assets/images/`
   // ... so you don't have to enter path info for each ref, but also means you have to store them there --- which probably is best (IMHO)
@@ -37,11 +44,12 @@ function imageShortcode(src, alt, cssClasses = "") {
    * Voir https://github.com/11ty/eleventy-img/issues/81
    * Voir https://www.11ty.dev/docs/plugins/image/#synchronous-usage
    */
-   Image(src, imageCreationOptions);
+  Image(src, imageCreationOptions);
   let metadata = Image.statsSync(src, imageCreationOptions);
 
   let lowsrc = metadata.jpeg[0]
   let highsrc = metadata.jpeg[metadata.jpeg.length - 1]
+  let sourceText = source != null ? `<div class="image-source">Image Source: <a href="${source.url}">${source.name}</a></div>` : "";
   return `<picture>
     ${Object.values(metadata).map(imageFormat => {
       return `  <source type="${imageFormat[0].sourceType}" srcset="${imageFormat.map(entry => encodeURI(entry.url) + ` ${entry.width}w`).join(", ")}" sizes="${sizes}">`
@@ -55,7 +63,8 @@ function imageShortcode(src, alt, cssClasses = "") {
       title="${alt}"
       loading="lazy"
       decoding="async">
-  </picture>`
+  </picture>
+  ${sourceText}`
 }
 
 function copyrightYear(startYear) {
@@ -196,18 +205,14 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addWatchTarget("./src/assets/css/*.css")
   eleventyConfig.addWatchTarget("./src/**/*.md")
 
-  eleventyConfig.setBrowserSyncConfig({
-    ...eleventyConfig.browserSyncConfig,
-    files: [
+  eleventyConfig.setServerOptions({
+    watch: [
       "src/**/*.js",
       "src/assets/css/*.css",
       "src/**/*.md",
     ],
-    ghostMode: false,
     port: 3000,
   })
-
-  eleventyConfig.addPlugin(ErrorOverlay)
 
   eleventyConfig.addTransform("htmlmin", function(content, outputPath) {
     if( outputPath.endsWith(".html") ) {

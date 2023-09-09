@@ -53,7 +53,7 @@
 {%    set tags = currentReview.tags %}
 {%  endif %}
 {%  for currentTag in tags | removeUselessTags %}
-        <li><a href="/tags/{{ currentTag | slug }}">{{ currentTag }}</a></li>
+        <li><a href="/tags/{{ currentTag | slugify }}">{{ currentTag }}</a></li>
 {%  endfor %}
         </ul>
       </div>

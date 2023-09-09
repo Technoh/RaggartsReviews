@@ -21,10 +21,9 @@
     "maintained node versions"
   ],
   "devDependencies": {
-    "@11ty/eleventy": "^0.12.1",
+    "@11ty/eleventy": "^2.0.1",
     "@11ty/eleventy-img": "^0.10.0",
     "autoprefixer": "^10.3.1",
-    "eleventy-plugin-error-overlay": "^0.1.2",
     "eleventy-plugin-svg-contents": "^0.7.0",
     "glob": "^7.1.7",
     "glob-all": "^3.2.1",
@@ -44,5 +43,8 @@
     "postcss-nesting": "^8.0.1",
     "rimraf": "^3.0.2",
     "tailwindcss": "^2.2.7"
+  },
+  "dependencies": {
+    "@11ty/eleventy-upgrade-help": "^1.0.1"
   }
 }

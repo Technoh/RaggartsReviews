@@ -6,6 +6,6 @@ layout: page
 <h1 class="mb-4 mt-4">List of all tags</h1>
 <ul class="tags-list">
 {%- for currentTag in collections | keys | except(['all', 'post', 'reviews']) -%}
-  <li class="leading-tight my-2"><a href="/tags/{{ currentTag | slug }}/">{{ currentTag }}</a>: {{ collections[currentTag] | length }}</li>
+  <li class="leading-tight my-2"><a href="/tags/{{ currentTag | slugify }}/">{{ currentTag }}</a>: {{ collections[currentTag] | length }}</li>
 {%- endfor -%}
 </ul>
